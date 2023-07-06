@@ -12,24 +12,24 @@ class SampleTestCase(TestCase):
 
 class TaskModelTestCase (TestCase):
     def test_create_task1(self):
-        due = timezone.make_aware (datetime (2023, 6, 30, 23, 59, 59))
+        due = timezone.make_aware(datetime (2023, 6, 30, 23, 59, 59))
         task = Task(title='task1', due_at=due)
         task.save()
-        task = Task.objects.get(pk = task.pk)
+        task = Task.objects.get(pk=task.pk)
         self.assertEqual(task.title, 'task1')
         self.assertFalse (task.completed)
         self.assertEqual(task.due_at, due)
     def test_create_task2 (self):
-        task = Task(title ='task2')
+        task = Task(title='task2')
         task.save()
-        task = Task.objects.get(pk = task.pk)
+        task = Task.objects.get(pk=task.pk)
         self.assertEqual(task.title, 'task2')
         self.assertFalse (task.completed)
         self.assertEqual(task.due_at, None)
     def test_is_overdue_future(self):
         due = timezone.make_aware(datetime (2023, 6, 30, 23, 59, 59))
         current = timezone.make_aware(datetime (2023, 6, 30, 0, 0, 0))
-        task = Task(title = 'task1', due_at=due)
+        task = Task(title='task1', due_at=due)
         task.save()
         self.assertFalse (task.is_overdue(current))
 class TodoViewTestCase (TestCase):
@@ -49,7 +49,7 @@ class TodoViewTestCase (TestCase):
     def test_index_get_order_post(self):
         task1 = Task(title='task1', due_at=timezone.make_aware(datetime (2023, 7, 1)))
         task1.save()
-        task2 = Task(title='task2', due_at=timezone.make_aware (datetime (2023, 8, 1)))
+        task2 = Task(title='task2', due_at=timezone.make_aware(datetime (2023, 8, 1)))
         task2.save()
         client = Client()
         response = client.get('/?order=post')
